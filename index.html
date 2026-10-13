@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f4f6f2" />
+    <title>AEGIS — Find nearby help</title>
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <link rel="preconnect" href="https://api.mapbox.com" />
+    <link href="https://api.mapbox.com/mapbox-gl-js/v3.32.0/mapbox-gl.css" rel="stylesheet" />
+    <link rel="stylesheet" href="./styles.css?v=editorial-2-20261004" />
+    <script src="https://api.mapbox.com/mapbox-gl-js/v3.32.0/mapbox-gl.js" defer></script>
+    <script src="./config.js" defer></script>
+    <script>if (window.location.protocol === "file:") document.documentElement.classList.add("file-open");</script>
+    <script type="module" src="./js/app.js?v=dehradun-demo-20261007"></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#top" aria-label="AEGIS home"><span class="brand-mark">A</span><span>AEGIS</span></a>
+      <div class="topbar-right">
+        <span id="connection-status" class="connection-pill"><i></i><span>Checking connection</span></span>
+        <span class="demo-label">Prototype</span>
+        <a class="admin-link" href="./volunteer.html">Volunteer Desk ↗</a>
+        <a class="admin-link" href="./admin.html">Admin Console ↗</a>
+        <a class="admin-link" href="./operator.html">Operator Desk ↗</a>
+      </div>
+    </header>
+
+    <main id="top" class="shell">
+      <div id="startup-warning" class="startup-warning" role="status"><strong>Start the local server first.</strong> This page’s interactive features need JavaScript modules. Double-click <code>start.bat</code> in this folder, then open the localhost page it launches.</div>
+      <section class="intro hero-intro">
+        <div class="hero-copy">
+          <p class="eyebrow">DISASTER RELIEF, COORDINATED</p>
+          <h1>Your digital disaster&#8209;relief aid</h1>
+          <p class="hero-tagline">Help is closer than you think.</p>
+          <p class="intro-copy">Find verified nearby help with food, water, first aid, shelter, and evacuation support.</p>
+          <a class="hero-cta" href="#help-map">Explore nearby help <span aria-hidden="true">↓</span></a>
+        </div>
+        <div class="hero-visual" aria-hidden="true">
+          <svg viewBox="0 0 720 500" role="presentation">
+            <defs>
+              <linearGradient id="terrain" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#d5c9a6"/><stop offset=".45" stop-color="#93a88e"/><stop offset="1" stop-color="#718d82"/></linearGradient>
+              <linearGradient id="terrainWash" x1="0" y1=".2" x2="1" y2=".8"><stop stop-color="#e7d4b1"/><stop offset=".53" stop-color="#aab89b"/><stop offset="1" stop-color="#748d84"/></linearGradient>
+              <radialGradient id="glow"><stop stop-color="#f5b650" stop-opacity=".4"/><stop offset="1" stop-color="#f5b650" stop-opacity="0"/></radialGradient>
+              <filter id="soften"><feGaussianBlur stdDeviation="12"/></filter>
+              <filter id="washEdges" x="-8%" y="-8%" width="116%" height="116%"><feTurbulence type="fractalNoise" baseFrequency=".018 .025" numOctaves="2" seed="8" result="grain"/><feDisplacementMap in="SourceGraphic" in2="grain" scale="8" xChannelSelector="R" yChannelSelector="G"/></filter>
+            </defs>
+            <path d="M242 30 312 11l40 25 58-18 54 38 69-12 31 43 83 21 31 58-18 40 45 41-28 54 30 42-44 68-74 11-43 50-76-26-53 25-51-24-73 23-54-40-70 4-23-53-58-20 11-51-42-49 33-45-9-56 45-30-1-60 58-20z" fill="url(#terrain)" opacity=".83" filter="url(#washEdges)"/>
+            <path d="M312 42c70 14 49 65 109 83s63 62 126 65 52 41 104 51M277 111c70 13 75 44 111 52s44 36 90 44 53 47 111 45M260 191c69-6 84 35 119 41s58-3 99 26 74 14 130 19M276 285c52-24 70 15 108 20s52-8 91 18 68 8 121 40M337 367c36-25 70-16 107 0s59 1 98 27" fill="none" stroke="#e9dfc9" stroke-width="22" stroke-linecap="round" opacity=".4" filter="url(#soften)"/>
+            <path d="M312 42c70 14 49 65 109 83s63 62 126 65 52 41 104 51M277 111c70 13 75 44 111 52s44 36 90 44 53 47 111 45M260 191c69-6 84 35 119 41s58-3 99 26 74 14 130 19M276 285c52-24 70 15 108 20s52-8 91 18 68 8 121 40M337 367c36-25 70-16 107 0s59 1 98 27" fill="none" stroke="#d7dfc9" stroke-width="7" stroke-linecap="round" opacity=".66"/>
+            <path d="M280 70c25 41 6 75 42 103s9 70 47 93 13 65 54 84 34 62 77 77M407 32c-7 48 29 59 18 99s38 56 20 96 28 48 8 92 21 65 4 110M559 77c-27 43 14 69-18 105s9 69-22 100 13 65-21 95" fill="none" stroke="#efe5d0" stroke-width="3" opacity=".48"/>
+            <path d="M293 347c39-50 63-106 129-117s91-56 166-26 61 42 101 56M315 173c54-25 103-46 147-33s69 48 128 30 78-55 113-81M402 412c-5-58 10-95 53-122s62-26 100-91 59-79 106-91" fill="none" stroke="#e7a64a" stroke-width="2.3" opacity=".85"/>
+            <g fill="url(#glow)"><circle cx="422" cy="230" r="37"/><circle cx="588" cy="204" r="34"/><circle cx="474" cy="290" r="30"/><circle cx="691" cy="260" r="34"/><circle cx="661" cy="108" r="28"/><circle cx="347" cy="326" r="27"/></g>
+            <g fill="#fff8e8" stroke="#e7a64a" stroke-width="4"><circle cx="422" cy="230" r="8"/><circle cx="588" cy="204" r="8"/><circle cx="474" cy="290" r="7"/><circle cx="691" cy="260" r="7"/><circle cx="661" cy="108" r="7"/><circle cx="347" cy="326" r="6"/></g>
+            <path d="M177 477c102-41 161-12 225-48s120-12 178-43 88-1 140-29" fill="none" stroke="#c7d0b9" stroke-width="16" opacity=".28"/>
+          </svg>
+        </div>
+        <div class="updated-note"><span class="pulse-dot"></span><span>Facility details are sample data</span></div>
+      </section>
+
+      <section class="workspace" aria-label="Nearby aid map and request tools">
+        <div class="map-column" id="help-map">
+          <div class="map-toolbar">
+            <form id="search-form" class="search-form">
+              <label class="sr-only" for="place-search">Search a place or address</label>
+              <span class="search-icon" aria-hidden="true">⌕</span>
+              <input id="place-search" type="search" autocomplete="off" placeholder="Search a place or address" />
+              <button class="search-submit" type="submit">Search</button>
+            </form>
+            <button id="locate-button" class="button button-light" type="button" aria-pressed="false"><span aria-hidden="true">◎</span> Use my location</button>
+          </div>
+          <div id="search-results" class="search-results" hidden></div>
+          <div class="map-frame">
+            <div id="map" role="region" aria-label="Map of nearby relief stations and shelters"></div>
+            <div id="map-fallback" class="map-fallback" hidden>
+              <div class="map-fallback-icon">⌖</div>
+              <h2>Map preview needs a Mapbox token</h2>
+              <p>Add your public token in <code>config.js</code>. You can still use location search and the nearby list.</p>
+            </div>
+            <div class="map-legend"><span><i class="legend-dot station-dot"></i> Relief station</span><span><i class="legend-dot shelter-dot"></i> Shelter</span><span><i class="legend-dot user-dot"></i> Your location</span></div>
+          </div>
+          <div class="map-caption"><span id="location-summary">Choose a location to see distances</span><button id="clear-location" class="text-button" type="button" hidden>Clear location</button></div>
+        </div>
+
+        <aside class="side-column">
+          <section class="panel location-panel">
+            <div class="panel-heading"><div><p class="eyebrow">YOUR LOCATION</p><h2>Confirm where you are</h2></div><span class="location-symbol">⌖</span></div>
+            <p id="location-message" class="muted">Start live GPS to update your location as you move, or search for a place. Live location stays on this device unless you submit a request or ask Mapbox for directions.</p>
+            <button id="demo-location" class="text-button demo-location-button" type="button">Preview with a sample Dehradun location</button>
+            <div id="location-detail" class="location-detail" hidden></div>
+            <div id="location-error" class="inline-error" role="status" hidden></div>
+          </section>
+
+          <section class="panel facilities-panel">
+            <div class="panel-heading facility-heading"><div><p class="eyebrow">NEAR YOU</p><h2>Relief locations</h2></div><label class="sr-only" for="radius-filter">Maximum distance</label><select id="radius-filter"><option value="5">Within 5 km</option><option value="1">Within 1 km</option><option value="25">Within 25 km</option></select></div>
+            <div class="filter-row" role="group" aria-label="Facility type filters"><button class="filter-chip is-active" data-filter="all" type="button">All <span id="count-all">0</span></button><button class="filter-chip" data-filter="station" type="button">Stations</button><button class="filter-chip" data-filter="shelter" type="button">Shelters</button></div>
+            <div id="facility-list" class="facility-list"></div>
+            <p class="freshness-note"><span class="freshness-icon">↻</span> Sample records show last updated times. Confirm availability before traveling.</p>
+          </section>
+
+          <section class="panel facility-detail-panel" id="facility-detail-panel" aria-live="polite" hidden>
+            <div class="panel-heading"><div><p class="eyebrow">FACILITY DETAILS</p><h2 id="detail-name"></h2></div><button id="close-facility-detail" class="detail-close" type="button" aria-label="Close facility details">×</button></div>
+            <p id="detail-address" class="detail-address"></p>
+            <div class="detail-status-row"><span id="detail-status" class="facility-status"></span><span id="detail-distance" class="detail-distance"></span></div>
+            <div class="detail-updated"><span>Last updated</span><strong id="detail-age">—</strong></div>
+            <div id="detail-supplies" class="detail-supplies"></div>
+            <button id="route-button" class="button button-primary route-button" type="button">Get walking route <span aria-hidden="true">→</span></button>
+            <p class="route-privacy">Mapbox receives your confirmed location and this facility’s location only when you request directions.</p>
+            <div id="route-message" class="route-message" role="status" aria-live="polite"></div>
+          </section>
+
+          <section class="panel request-panel">
+            <div class="panel-heading"><div><p class="eyebrow">NEED ASSISTANCE?</p><h2>Save a help request</h2></div><span class="request-symbol">＋</span></div>
+            <form id="request-form" class="request-form">
+              <label for="request-type">What do you need?</label>
+              <select id="request-type" required><option value="Food">Food</option><option value="Water">Water</option><option value="First aid">First aid</option><option value="Transportation">Transportation</option><option value="Shelter">Shelter</option><option value="Other">Other</option></select>
+              <div class="form-split"><div><label for="people-count">People</label><input id="people-count" type="number" min="1" max="50" value="1" required /></div><div class="location-attached"><span>Request location</span><strong id="request-location-label">Not selected</strong></div></div>
+              <label for="request-description">Details <span class="optional">Optional</span></label>
+              <textarea id="request-description" rows="2" maxlength="400" placeholder="Share details that will help volunteers respond"></textarea>
+              <button class="button button-primary submit-button" type="submit">Save request <span aria-hidden="true">→</span></button>
+              <p id="request-message" class="request-message" role="status">A request needs a confirmed location.</p>
+            </form>
+          </section>
+
+          <section class="my-requests-panel" aria-labelledby="my-requests-heading">
+            <div><p class="eyebrow">REQUEST TRACKING</p><h2 id="my-requests-heading">My requests</h2></div>
+            <p id="my-requests-status" class="my-requests-status" role="status">Your demo requests will appear here.</p>
+            <div id="my-requests-list" class="my-requests-list" aria-live="polite"></div>
+          </section>
+
+          <section class="queue-strip" aria-live="polite"><span class="queue-icon">▤</span><span><strong id="queue-count">0 pending</strong><small id="queue-status">Offline actions stay on this device</small></span><button id="sync-button" class="sync-button" type="button">Sync</button></section>
+        </aside>
+      </section>
+      <section class="public-updates" aria-label="Public emergency information">
+        <article class="public-update-card"><p class="eyebrow">VERIFIED ALERTS</p><div id="public-alerts" class="public-update-list"><p class="public-empty">No demo alerts have been added.</p></div></article>
+        <article class="public-update-card"><p class="eyebrow">AREAS TO AVOID</p><div id="public-avoid-areas" class="public-update-list"><p class="public-empty">No demo avoid areas have been added.</p></div></article>
+        <article class="public-update-card"><p class="eyebrow">EMERGENCY CONTACTS</p><div id="public-contacts" class="public-update-list"><p class="public-empty">No demo contacts have been added.</p></div></article>
+      </section>
+      <footer class="page-footer"><span>AEGIS helps coordinate relief information; it does not replace emergency services.</span><a href="https://docs.mapbox.com/mapbox-gl-js/guides/get-started/" target="_blank" rel="noreferrer">Map powered by Mapbox</a></footer>
+    </main>
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  </body>
+</html>

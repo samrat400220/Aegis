@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f4f6f2" />
+    <title>AEGIS — Admin Console</title>
+    <link rel="stylesheet" href="./admin.css" />
+    <link rel="stylesheet" href="./styles.css?v=editorial-2-20261004" />
+    <script src="./config.js" defer></script>
+    <script type="module" src="./js/admin/admin.js?v=dehradun-demo-20261007"></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="./index.html"><span class="brand-mark">A</span><span>AEGIS</span></a>
+      <div class="topbar-right"><span class="admin-demo-pill">Local admin demo</span><a class="admin-link" href="./volunteer.html">Volunteer Desk ↗</a><a class="admin-link" href="./operator.html">Operator Desk ↗</a><a class="admin-link" href="./index.html">Public view ↗</a></div>
+    </header>
+    <main class="admin-shell">
+      <section class="admin-intro"><div><p class="eyebrow">OPERATIONS DESK</p><h1>Manage relief information</h1><p>Add and update locations and public information with forms. No code edits are needed for these tasks.</p></div><span class="admin-badge">DEMO ADMIN</span></section>
+      <div class="admin-notice"><strong>Local demo storage.</strong> Changes save in this browser only; other users will not see them. Add Clerk sign-in and connect Convex before using real disaster information.</div>
+      <section class="admin-stats" aria-label="Record counts"><article><span>Facilities</span><strong id="stat-facilities">0</strong></article><article><span>Alerts</span><strong id="stat-alerts">0</strong></article><article><span>Avoid areas</span><strong id="stat-avoid">0</strong></article><article><span>Contacts</span><strong id="stat-contacts">0</strong></article><article><span>Needs review</span><strong id="stat-pending">0</strong></article></section>
+      <nav class="admin-tabs" role="tablist" aria-label="Admin sections">
+        <button class="admin-tab is-active" data-tab="facilities" role="tab" aria-selected="true" type="button">Shelters &amp; stations</button>
+        <button class="admin-tab" data-tab="alerts" role="tab" aria-selected="false" type="button">Alerts</button>
+        <button class="admin-tab" data-tab="avoidAreas" role="tab" aria-selected="false" type="button">Areas to avoid</button>
+        <button class="admin-tab" data-tab="contacts" role="tab" aria-selected="false" type="button">Emergency contacts</button>
+        <button class="admin-tab" data-tab="inbox" role="tab" aria-selected="false" type="button">Operator inbox <span id="inbox-count" class="inbox-count">0</span></button>
+      </nav>
+
+      <section class="admin-workspace" data-panel="facilities">
+        <article class="admin-panel editor-panel"><div class="admin-panel-heading"><div><p class="eyebrow">FACILITY DETAILS</p><h2 id="facility-form-title">Add a shelter or relief station</h2></div><span class="form-step">01</span></div>
+          <form id="facility-form" class="admin-form">
+            <input id="facility-id" type="hidden" />
+            <div class="form-grid"><div><label for="facility-type">What are you adding?</label><select id="facility-type"><option value="shelter">Shelter</option><option value="station">Relief station</option></select></div><div><label for="facility-status">Current status</label><select id="facility-status"><option>OPEN</option><option>LIMITED</option><option>FULL</option><option>TEMPORARILY_CLOSED</option><option>EMERGENCY</option></select></div></div>
+            <label for="facility-name">Facility name</label><input id="facility-name" required maxlength="100" placeholder="e.g. Central Community Shelter" />
+            <label for="facility-address">Address or nearby landmark</label><div class="search-inline"><input id="facility-address" required maxlength="180" placeholder="Enter address or landmark" /><button id="facility-search-button" class="button button-light" type="button">Find on map</button></div>
+            <button id="facility-sample-location" class="admin-sample-button" type="button">Use sample Dehradun point for a demo</button>
+            <p class="admin-location-note">Saving a searched facility location uses Mapbox permanent geocoding. If your Mapbox account does not allow it, enter the verified coordinates through the backend integration or use the sample point for a demo.</p>
+            <div id="facility-search-results" class="admin-search-results" hidden></div>
+            <div id="selected-address" class="selected-address">Choose a search result to set its map location.</div>
+            <input id="facility-latitude" type="hidden" /><input id="facility-longitude" type="hidden" />
+            <div id="shelter-fields" class="form-grid"><div><label for="facility-capacity">Total capacity</label><input id="facility-capacity" type="number" min="0" value="0" /></div><div><label for="facility-occupancy">Current occupancy</label><input id="facility-occupancy" type="number" min="0" value="0" /></div></div>
+            <div id="station-fields" hidden><p class="resource-heading">Current supplies <span>Enter quantities</span></p><div class="form-grid three-cols"><div><label for="resource-water">Water</label><input id="resource-water" type="number" min="0" value="0" /></div><div><label for="resource-food">Food</label><input id="resource-food" type="number" min="0" value="0" /></div><div><label for="resource-first-aid">First aid</label><input id="resource-first-aid" type="number" min="0" value="0" /></div><div><label for="resource-blankets">Blankets</label><input id="resource-blankets" type="number" min="0" value="0" /></div><div><label for="resource-transport">Transport seats</label><input id="resource-transport" type="number" min="0" value="0" /></div></div></div>
+            <label for="facility-contact">Contact or operating note <span class="optional">Optional</span></label><input id="facility-contact" maxlength="160" placeholder="Optional contact name or note" />
+            <div class="form-actions"><button class="button button-primary" type="submit" id="facility-save">Save facility</button><button class="button button-light" type="button" id="facility-cancel" hidden>Cancel edit</button></div>
+            <p id="facility-message" class="admin-form-message" role="status"></p>
+          </form>
+        </article>
+        <article class="admin-panel records-panel"><div class="admin-panel-heading"><div><p class="eyebrow">FACILITY DIRECTORY</p><h2>Current shelters and stations</h2></div><span id="facility-record-count" class="record-count">0 records</span></div><div id="facility-records" class="admin-record-list"></div></article>
+      </section>
+
+      <section class="admin-workspace single-workspace" data-panel="alerts" hidden>
+        <article class="admin-panel editor-panel"><div class="admin-panel-heading"><div><p class="eyebrow">PUBLIC INFORMATION</p><h2 id="alert-form-title">Publish a verified alert</h2></div><span class="form-step">02</span></div><form id="alert-form" class="admin-form"><input id="alert-id" type="hidden" /><label for="alert-title">Alert title</label><input id="alert-title" required maxlength="100" placeholder="e.g. Flood warning for XYZ area" /><label for="alert-severity">Severity</label><select id="alert-severity"><option>LOW</option><option selected>MEDIUM</option><option>HIGH</option><option>CRITICAL</option></select><label for="alert-instruction">What should people do?</label><textarea id="alert-instruction" required maxlength="500" rows="3" placeholder="Write a clear instruction"></textarea><div class="form-actions"><button class="button button-primary" type="submit">Save alert</button><button class="button button-light" type="button" data-cancel="alert" hidden>Cancel edit</button></div><p class="admin-form-message" id="alert-message" role="status"></p></form></article><article class="admin-panel records-panel"><div class="admin-panel-heading"><div><p class="eyebrow">CURRENT ALERTS</p><h2>Public alert list</h2></div></div><div id="alert-records" class="admin-record-list"></div></article>
+      </section>
+
+      <section class="admin-workspace single-workspace" data-panel="avoidAreas" hidden>
+        <article class="admin-panel editor-panel"><div class="admin-panel-heading"><div><p class="eyebrow">PUBLIC SAFETY</p><h2 id="avoid-form-title">Mark an area to avoid</h2></div><span class="form-step">03</span></div><form id="avoid-form" class="admin-form"><input id="avoid-id" type="hidden" /><label for="avoid-name">Area name</label><input id="avoid-name" required maxlength="100" placeholder="e.g. East bridge" /><label for="avoid-address">Location or landmark</label><input id="avoid-address" required maxlength="180" placeholder="Road, neighborhood, or landmark" /><label for="avoid-reason">Why should people avoid it?</label><textarea id="avoid-reason" required maxlength="300" rows="3" placeholder="e.g. Road is flooded"></textarea><div class="form-actions"><button class="button button-primary" type="submit">Save area</button><button class="button button-light" type="button" data-cancel="avoid" hidden>Cancel edit</button></div><p class="admin-form-message" id="avoid-message" role="status"></p></form></article><article class="admin-panel records-panel"><div class="admin-panel-heading"><div><p class="eyebrow">CURRENT WARNINGS</p><h2>Areas to avoid</h2></div></div><div id="avoid-records" class="admin-record-list"></div></article>
+      </section>
+
+      <section class="admin-workspace single-workspace" data-panel="contacts" hidden>
+        <article class="admin-panel editor-panel"><div class="admin-panel-heading"><div><p class="eyebrow">VERIFIED INFORMATION</p><h2 id="contact-form-title">Add an emergency contact</h2></div><span class="form-step">04</span></div><form id="contact-form" class="admin-form"><input id="contact-id" type="hidden" /><label for="contact-name">Service or organization</label><input id="contact-name" required maxlength="100" placeholder="e.g. Ambulance" /><label for="contact-phone">Phone number</label><input id="contact-phone" type="tel" required maxlength="40" placeholder="Enter a verified phone number" /><label for="contact-organization">Organization</label><input id="contact-organization" required maxlength="100" placeholder="Official organization" /><div class="form-actions"><button class="button button-primary" type="submit">Save contact</button><button class="button button-light" type="button" data-cancel="contact" hidden>Cancel edit</button></div><p class="admin-form-message" id="contact-message" role="status"></p></form></article><article class="admin-panel records-panel"><div class="admin-panel-heading"><div><p class="eyebrow">CURRENT CONTACTS</p><h2>Emergency contacts</h2></div></div><div id="contact-records" class="admin-record-list"></div></article>
+      </section>
+      <section class="admin-workspace single-workspace" data-panel="inbox" hidden>
+        <article class="admin-panel inbox-intro"><p class="eyebrow">VERIFY BEFORE PUBLISHING</p><h2>Operator submissions</h2><p>Review each change against a trusted source. Only approved submissions update the public relief information.</p><div class="inbox-guidance"><strong>Review checklist</strong><span>Confirm the location, operating status, and capacity or supplies with an authorized source before approving.</span></div></article>
+        <article class="admin-panel records-panel"><div class="admin-panel-heading"><div><p class="eyebrow">REVIEW QUEUE</p><h2>Waiting for review</h2></div><span id="proposal-pending-label" class="record-count">0 pending</span></div><div id="proposal-records" class="admin-record-list"></div></article>
+      </section>
+      <footer class="admin-footer">AEGIS coordinates relief information. Verify facility status and emergency information before publishing.</footer>
+    </main>
+    <div id="admin-toast" class="toast" role="status" aria-live="polite"></div>
+  </body>
+</html>

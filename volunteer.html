@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f4f6f2" />
+    <title>AEGIS — Volunteer Desk</title>
+    <link rel="stylesheet" href="./styles.css?v=editorial-2-20261004" />
+    <link rel="stylesheet" href="./volunteer.css" />
+    <script type="module" src="./js/volunteer/volunteer.js"></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="./index.html"><span class="brand-mark">A</span><span>AEGIS</span></a>
+      <div class="topbar-right">
+        <span class="demo-label">Volunteer demo</span>
+        <a class="admin-link" href="./index.html">Public view ↗</a>
+        <a class="admin-link" href="./admin.html">Admin Console ↗</a>
+      </div>
+    </header>
+    <main class="volunteer-shell">
+      <section class="volunteer-hero">
+        <div>
+          <p class="eyebrow">VOLUNTEER DESK</p>
+          <h1>Requests near you</h1>
+          <p>See open requests within your chosen radius that match the help you can provide.</p>
+        </div>
+        <button id="volunteer-location-button" class="button button-light" type="button">Use my location</button>
+      </section>
+
+      <div class="volunteer-demo-notice" role="note">
+        Demo only: requests and assignments are stored in this browser, not Convex. Do not use real victim details here.
+      </div>
+
+      <section class="volunteer-layout">
+        <aside class="volunteer-filters">
+          <h2>Set your search</h2>
+          <p id="volunteer-location-status" class="volunteer-location-status" role="status">Share your device location to find nearby requests. Your location is used only in this page session.</p>
+          <label class="volunteer-name-label" for="volunteer-name">Volunteer display name</label>
+          <input id="volunteer-name" class="volunteer-name-input" maxlength="80" autocomplete="name" placeholder="Name shown to the requester" />
+          <fieldset id="volunteer-capabilities" class="capability-list">
+            <legend>What can you help with?</legend>
+            <label><input type="checkbox" value="Food" /> Food</label>
+            <label><input type="checkbox" value="Water" /> Water</label>
+            <label><input type="checkbox" value="First aid" /> First aid</label>
+            <label><input type="checkbox" value="Transportation" /> Transportation</label>
+            <label><input type="checkbox" value="Shelter" /> Shelter</label>
+            <label><input type="checkbox" value="Other" /> Other</label>
+          </fieldset>
+          <label class="radius-label" for="volunteer-radius">Search radius</label>
+          <select id="volunteer-radius">
+            <option value="1">Within 1 km</option>
+            <option value="5">Within 5 km</option>
+            <option value="10" selected>Within 10 km</option>
+            <option value="25">Within 25 km</option>
+          </select>
+          <button id="volunteer-refresh" class="button button-primary volunteer-refresh" type="button">Refresh requests</button>
+        </aside>
+
+        <section class="volunteer-results" aria-labelledby="volunteer-results-title">
+          <div class="volunteer-results-heading">
+            <div><p class="eyebrow">OPEN ASSISTANCE REQUESTS</p><h2 id="volunteer-results-title">Matching requests</h2></div>
+            <span id="volunteer-result-count" class="volunteer-count">0</span>
+          </div>
+          <div id="volunteer-request-list" class="volunteer-request-list" aria-live="polite">
+            <p class="volunteer-empty">Choose your capabilities and share your location to search.</p>
+          </div>
+          <p class="volunteer-privacy-note">Victim names and exact locations stay hidden until you accept. After acceptance, the demo shows the exact location and directions. Do not use this demo for emergency dispatch.</p>
+        </section>
+      </section>
+    </main>
+  </body>
+</html>
