@@ -62,25 +62,6 @@ js/services/convexAdapter.js       Integration placeholder for Member 5
 js/volunteer/volunteer.js          Capability- and distance-filtered request list
 ```
 
-## Before merging with the team
-
-Ask Member 5 for:
-
-- The Convex request creation mutation name and required argument fields.
-- Whether requests need an authenticated user ID or Clerk subject in the payload.
-- The request location shape (this prototype uses `{ latitude, longitude, accuracy, timestamp, source, label }`).
-- The request state enum (the specification lists `PENDING`, `ACCEPTED`, `IN_PROGRESS`, `COMPLETED`, with optional `CANCELLED`).
-- Confirmation that the backend stores and checks `offlineActionId` atomically. The client key alone cannot stop duplicates if the backend does not enforce it.
-- The Convex query used to retrieve public shelters and relief stations, including status and `updatedAt`.
-
-Then implement `sendActionToConvex` in `js/services/convexAdapter.js`, set `syncMode: "convex"` in `config.js`, and map the agreed query results into the facility fields in `js/data/facilities.js` or replace that sample module with a query adapter. Keep server authorization and idempotency checks inside Convex; frontend checks are not security controls.
-
-## Source boundary
-
-The AEGIS specification describes internet available actions going to Convex and offline actions being stored in IndexedDB until connectivity returns. It explicitly says offline mode does not provide immediate server communication or cross-user synchronization. This module follows that model. Device-to-device Offline SOS or mesh relay is not included.
-
-## Official references
-
 - [Mapbox GL JS getting started](https://docs.mapbox.com/mapbox-gl-js/guides/get-started/)
 - [Mapbox markers and controls](https://docs.mapbox.com/mapbox-gl-js/api/markers/)
 - [Mapbox Geocoding API v6](https://docs.mapbox.com/api/search/geocoding/)
@@ -89,7 +70,3 @@ The AEGIS specification describes internet available actions going to Convex and
 - [MDN `navigator.onLine`](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/onLine)
 - [Convex JavaScript client](https://docs.convex.dev/client/javascript/overview)
 - [Convex mutations](https://docs.convex.dev/functions/mutation-functions)
-
-## Phase 1 Convex backend
-
-The `convex/` folder contains the Phase 1 schema and authenticated Convex functions for users, volunteers, facilities, inventory, requests, and operator submissions. See `convex/README.md` for setup and deployment steps. The current public/admin/operator/volunteer pages still use browser-local demo storage; do not change `syncMode` to `convex` until Clerk sign-in and the authenticated Convex browser client are connected.
